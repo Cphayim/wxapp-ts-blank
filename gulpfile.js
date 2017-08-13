@@ -114,6 +114,24 @@ const WXMLCopy = (filePath) => {
             log.finish(taskName, endTime, time);
         });
 }
+// 拷贝 json
+const JSONCopy = (filePath) => {
+    const taskName = 'JSONCopy',
+        startTime = Date.now();
+
+    log.start(taskName, startTime);
+
+    filePath = filePath || config.srcDir + '**/*.json';
+    return gulp.src([filePath, `!${config.srcDir}dev-resource/**/*`], {
+            base: config.srcDir
+        })
+        .pipe(gulp.dest(config.outDir))
+        .on('end', () => {
+            const endTime = Date.now(),
+                time = endTime - startTime;
+            log.finish(taskName, endTime, time);
+        });
+}
 
 // 拷贝需要打包的资源文件
 const AssetsCopy = (filePath) => {
@@ -149,6 +167,7 @@ gulp.task('clean', () => {
 
 gulp.task('start', ['clean', 'Imagemin'], () => {
     WXMLCopy();
+    JSONCopy();
     SCSSCompile();
     TSCompile();
     ES6Transpile();
@@ -162,6 +181,14 @@ gulp.task('start', ['clean', 'Imagemin'], () => {
             const taskName = 'WXMLCopy';
             log.watch(event.path.match(reg)[0], event.type, taskName);
             WXMLCopy();
+        }
+    );
+    // 监视 json 文件变动
+    gulp.watch([`${config.srcDir}**/*.json`, `!${config.srcDir}dev-resource/**/*`],
+        event => {
+            const taskName = 'JSONCopy';
+            log.watch(event.path.match(reg)[0], event.type, taskName);
+            JSONCopy();
         }
     );
     // 监视 scss 文件变动
