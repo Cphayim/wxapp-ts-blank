@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "gulp start"
+    "dev": "gulp start",
+    "clean": "gulp clean"
   },
   "author": "Cphayim",
   "license": "MIT",
   "devDependencies": {
+    "@types/es6-shim": "^0.31.34",
     "babel-preset-es2015": "^6.24.1",
     "colors": "^1.1.2",
     "gulp": "^3.9.1",
@@ -28,5 +30,6 @@
     "gulp-uglify": "^3.0.0",
     "moment": "^2.18.1",
     "typescript": "^2.4.2"
-  }
+  },
+  "dependencies": {}
 }
