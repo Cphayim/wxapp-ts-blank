@@ -160,12 +160,12 @@ gulp.task('Imagemin', () => {
 
 // 清空 dist 目录
 gulp.task('clean', () => {
-    return gulp.src(`${config.outDir}**/*`)
+    return gulp.src(`${config.outDir}*`)
         .pipe($.clean())
 });
 
 
-gulp.task('start', ['clean', 'Imagemin'], () => {
+gulp.task('start', ['clean','Imagemin'], () => {
     WXMLCopy();
     JSONCopy();
     SCSSCompile();
